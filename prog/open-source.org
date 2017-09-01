@@ -1,0 +1,4 @@
+#+TITLE: Open-source guides
+** Changelog
+- [[http://keepachangelog.com/en/1.0.0/][Changelog writings styleguide]]
+-[[https://github.com/hawkowl/towncrier][ {Towncrier} Changelog autoformatter]]

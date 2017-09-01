@@ -1,0 +1,42 @@
+#+TITLE: Django framework
+* Articles
++ [[https://krzysztofzuraw.com/blog/2017/django-graphql-react-part-one.html][Django, GraphQL, React]]
++ [[https://simpleisbetterthancomplex.com/tutorial/2017/08/01/how-to-setup-amazon-s3-in-a-django-project.html][Django to S3 Amazon]]
++ [[https://medium.freecodecamp.org/my-giant-javascript-basics-course-is-now-live-on-youtube-and-its-100-free-9020a21bbc27][Creating and populating a non-nullable field in Django]]
++ [[http://www.sunnyville.co/sending-emails-django-setting-up/][Sending Emails eith Django]]
++ [[https://medium.com/wemake-services/managing-djangos-settings-e2b7f496120d][Managing Django settings (I like the structure thought)]]
++ [[http://lucasroesler.com/2017/04/delete-or-not-to-delete/][Delete or not delete]]
++ [[http://dizballanze.com/django-project-optimization-part-2/][Django optimization guide]]
++ [[https://medium.com/@hakibenita/how-to-manage-concurrency-in-django-models-b240fed4ee2][How to manage concurrency in Django models]]
+* Debugging
+** Quickly add queries logging in Django
+#+BEGIN_SRC python
+  LOGGING = {
+      'version': 1,
+      'disable_existing_loggers': False,
+      'handlers': {
+          'console': {
+              'level': 'DEBUG',
+              'class': 'logging.StreamHandler',
+          }
+      },
+      'loggers': {
+          'django.db.backends': {
+              'handlers': ['console'],
+              'level': 'DEBUG',
+          },
+      }
+  }
+#+END_SRC
+* Cool Github Projects
++ [[https://github.com/twtrubiks/django-shop-tutorial][Creating shop tutorial]]
++ [[https://github.com/dizballanze/django-eraserhead][Erazerhead - hints to optimize queries]]
++ [[https://github.com/ionelmc/python-remote-pdb][Remote-pdb]]
++ [[https://github.com/joerick/pyinstrument][Pyinstrument]]
+* Testing
+** Articles
+   + [[https://medium.com/gitux/speed-up-django-transaction-hooks-tests-6de4a558ef96][Speed-Up Django database related tests with transactions]]
+* Celery
++ [[https://engineering.rover.com/blog/ops/2017/08/21/wrangling-celery-workflows/][Wrangling celery workflows]]
+* Deploy
++ [[https://semaphoreci.com/community/tutorials/writing-testing-and-deploying-a-django-api-to-heroku-with-semaphore][Writing, testing, deploing Django APIs to Heroku from Semaphore]]

@@ -1,0 +1,3 @@
+* Articles
++ [[https://www.howtographql.com/][Fullstack Tutorial for GraphQL]]
++ [[https://medium.com/@systango/graphql-python-a-beauty-in-simplicity-a-beast-in-application-54ba82e32afa][GraphQL and Python]]

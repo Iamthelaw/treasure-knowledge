@@ -1,0 +1,99 @@
+#+TITLE: Emacs
+* Cheatsheets
+** General
+| Key     | Description                                      |
+|---------+--------------------------------------------------|
+| SPC p p | open project                                     |
+| SPC p f | fuzzy search file in project within root         |
+| SPC '   | open teminal                                     |
+| 2 SPC ' | open second terminal pane                        |
+| SPC q q | quit                                             |
+| SPC w - | split window horizontaly                         |
+| SPC w / | split window vertically                          |
+| SPC T s | switch color theme (needs themes-megapack layer) |
+** Config
+| Key       | Description                             |
+|-----------+-----------------------------------------|
+| SPC f e d | open .spacemacs config file             |
+| SPC f e R | reload spacemacs config without restart |
+** Files
+| Key       | Description                             |
+|-----------+-----------------------------------------|
+| SPC f R | rename current file                      |
+| SPC f j | open current file directory              |
+| SPC f f | create new file                          |
+** Search
+| Key       | Description                                   |
+|-----------+-----------------------------------------------|
+| SPC s p   | search in project selected word or block      |
+| SPC s s   | search within currnt buffer (Helm swoop mode) |
+| SPC s a p | search any pattern in project with ag         |
+** Buffers
+| Key     | Description                             |
+|---------+-----------------------------------------|
+| SPC b K | kill all buffers except the current one |
+| SPC TAB | switch to prev buffer                   |
+| SPC b b | helm-mini, lists buffers                |
+| SPC b d | kill current buffer                     |
+** Snippets (yasnippet)
+| Key     | Description               |
+|---------+---------------------------|
+| M /     | Snippet complite          |
+| SPC i s | Snippets list with search |
+** Python
+| Key       | Description                                    |
+|-----------+------------------------------------------------|
+| SPC m r   | refactor thing at point (needs semantic layer) |
+| SPC m s i | open ipython REPL                              |
+| SPC m c c | execute current file in shell                  |
+| SPC m t t | lunch current test function                    |
+| SPC m t b | lunch tests in current buffer                  |
+| SPC m t a | lunch all tests                                |
+| SPC m r i | remove unused inports (needs autoflake)        |
+| SPC m r I | sort all imports in buffer (needs isort)       |
+| SPC m =   | reformat buffer (needs YAPF)                   |
+** Magit
+| Key       | Description                               |
+| SPC g f h | git log of current file                   |
+| SPC g t   | open time machine (p, n)                  |
+| SPC g M   | display last commit message for this line |
+** Dired
+| Key     | Description              |
+|---------+--------------------------|
+| SPC a d | open dired               |
+| D       | delete file              |
+| R       | rename file              |
+| +       | create new directory     |
+| g       | reload listing           |
+| ?       | display list of commands |
+** Org
+| Key       | Description                               |
+|-----------+-------------------------------------------|
+| SPC m p   | starts pomodoro timing                    |
+| >         | shift things right                        |
+| <         | shift things left                         |
+| t         | make header as TODO, and toggle TODO-DONE |
+| T         | create new TODO item                      |
+| SPC m i l | insert link                               |
+| SPC m :   | insert tags to heading                    |
+| SPC m a   | show agenda                               |
+| SPC m d   | set deadline                              |
+* Org-mode
+** Links
++ [[http://orgmode.org/guide/][Org-mode Compact Manual]]
++ [[http://orgmode.org/manual/index.html][Org-mode full manual]]
+** Markup
++ *bold*
++ /italic/
++ _underlined_
++ =code=
++ ~verbatim~
++ +strike throught+
+
+------
+
+Insert hotizontal rule of no less than 5 dashes
+
+** Descriptors
++ Elijah Wood :: He plays Frodo
++ Sean Astin :: He plays Sam, Frodo's friend

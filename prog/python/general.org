@@ -1,0 +1,162 @@
+#+TITLE: Python General Knowlage
+* Python 2/3
++ [[http://python-future.org/compatible_idioms.html][Writing python 2-3 compatible code]]
+* Tools
+- [[https://github.com/joerick/pyinstrument][pyinstrument]]
+* Cool Projects
++ [[https://github.com/coells/100days?utm_campaign=explore-email&utm_medium=email&utm_source=newsletter&utm_term=weekly][100 Days of Algorithms in python]]
++ [[https://github.com/crazyguitar/pysheeet?utm_campaign=explore-email&utm_medium=email&utm_source=newsletter&utm_term=weekly][Python cheatsheet project]]
+* Code analyzing
+** pyreverse
+:pyreverse: to create class chema. =pyreverse web_edu.core.declaration.alloc=
+:xdot: to view .dot schematics =xdot classes.dot=
+* Logging
+** Basic primer
+
+#+BEGIN_SRC python
+import sys
+import logging
+
+logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
+#+END_SRC
+
+** Raise a package level logging
+
+#+BEGIN_SRC python
+logging.getLogger('urllib3').setLevel(logging.INFO)
+#+END_SRC
+
+** Formatting log output
+#+BEGIN_SRC python
+log.debug('called with args %s and %s', a, b)  # log.debug(msg, *args, **kwargs)
+#+END_SRC
+
+** Set log format in __init__.py of programm
+
+#+BEGIN_SRC python
+import sys
+import logging
+
+logging.basic.Config(
+    stream=sys.stdout,
+    level=logging=DEBUG,
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+)
+
+logging.getLogger('somelib').setLevel(logging.INFO)
+logging.getLogger('otherlib').setLevel(logging.INFO)
+#+END_SRC
+
+- IMPORTANT! :: [[https://docs.python.org/3/library/logging.html#logrecord-attributes][Log formatting examples]]
+
+** Handling Exceptions
+
+#+BEGIN_SRC python
+try:
+    return pizza['sauce']
+except KeyError:
+    log.debug('Pizza: %s', pizza)
+    log.warning('No sauce on pizza!', exc_info=True)
+log.debug("I'm still running")
+#+END_SRC
+
+** Logging in a class
+A general method =log.log= takes a level as first parameter
+
+#+BEGIN_SRC python
+log.log(self.level, 'the level of this message may vary and contain %s', 'peanuts')
+#+END_SRC
+
+** Articles
++ [[https://julien.danjou.info/blog/python-logging-easy-with-daiquiri][Easy logging with daiquiri]]
+* Quirks
+** Env settings
+| Variable              | Description                             |
+|-----------------------+-----------------------------------------|
+| PYTHONWRITEBYTECODE=1 | Do not create this annoying *.pyc files |
+** Split
+1. by default =.split()= will split string by any number of spaces between words
+2. to take only two first words from a string, you call =.strip(None, maxsplits=1)=
+3. you can split and deconstruct in one call with *rsplit*
+
+#+BEGIN_SRC python
+first_name, last_name = person.rsplit(None, 1)
+#+END_SRC
+
+** Iterators
+For creating simple iterator class we need to have next and __iter__ methods
+
+#+BEGIN_SRC python
+class InfiniteRepeater(object):
+    def __init__(self, value):
+        self.value = value
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        return self.value
+
+    # Python 2 compatibility:
+    def next(self):
+        return self.__next__()
+#+END_SRC
+
+Check out compatibility difference!
+* Tips & tricks
+** Split every nth character
+#+BEGIN_SRC python
+s = '1234567890'
+x = map(''.join, zip(*[iter(s)] * 2))
+print list(x)  # ['12', '34', '56', '78', '90']
+#+END_SRC
+** Flatten list of lists
+This is flattens list of lists
+#+BEGIN_SRC python
+{item for sublist in l for item in sublist}
+#+END_SRC
+** Concurrency
+Just an example of concurrency in python
+#+BEGIN_SRC python
+from concurrent import futures
+
+NUM OF_THREADS = 4
+
+product = ['Apple TV', 'Amazon Echo', 'Google Home']
+
+def action(product):
+    '''A long intensive task'''
+    print(f'I Chose the product {product}')
+
+with futures.ThreadPoolExecutor(NUM_OF_THREADS) as executer:
+    results = executer.map(action, product)
+#+END_SRC
+** No exceptions decorator
+Sometimes you just don't care about errors
+#+BEGIN_SRC python
+def no_ex(func):
+    def wrap_func(*args, **kwargs):
+        try:
+            return func(*args, **kwargs)
+        except Exception as e:
+            print('Got error!', repr(e))
+            return None
+
+@no_ex
+def oops():
+    i = 3
+    i /= 0
+
+oops()
+#+END_SRC
+** Clever cyrillic string cleaup
+#+BEGIN_SRC python
+import re
+
+string = u'Кое что странное 𝑩𝑪 = 𝟑 �'
+pattern = re.compile(ur'[^А-я!-þ\s]+', flags=re.UNICODE)
+re.sub(pattern, '', string)
+#+END_SRC
+* Videos
++ [[https://www.youtube.com/watch?v=NfngrdLv9ZQ][Raymond Hettinger - about decorators]]
++ [[https://www.youtube.com/watch?v=wf-BqAjZb8M][Raymond Hettinger - Beyond PEP8]]

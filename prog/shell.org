@@ -1,0 +1,2 @@
+* Packages
+- [[https://github.com/koalaman/shellcheck][Static analyz tool]]

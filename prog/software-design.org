@@ -1,0 +1,10 @@
+#+TITLE: Software Design
+* Articles
++ [[https://scotch.io/bar-talk/s-o-l-i-d-the-first-five-principles-of-object-oriented-design][S.O.L.I.D principles of Object Oriented Design]]
+* Books
+1. [[https://www.amazon.com/dp/1491953527/?tag=pyb0f-20][Building Maintainable Software: Ten Guidlines]]
+2. [[https://www.amazon.com/dp/0201633612/?tag=pyb0f-20][Design Patterns: Elements of Reusable OOS]]
+3. [[https://www.amazon.com/dp/0132350882/?tag=pyb0f-20][Clean Code: A Handbook of Agile Software Craftmanship]]
+4. [[https://www.amazon.com/dp/0201485672/?tag=pyb0f-20][Refactoring: Improving the Design of Existing Code]]
+* Repos
++ [[https://github.com/dboyliao/SOLID][SOLID principles to apply with python examples]]

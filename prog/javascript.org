@@ -1,0 +1,3 @@
+#+TITLE: Javascript lalaland
+* Videos
++ [[https://medium.freecodecamp.org/my-giant-javascript-basics-course-is-now-live-on-youtube-and-its-100-free-9020a21bbc27][gigant javascript course]]

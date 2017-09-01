@@ -1,0 +1,11 @@
+#+TITLE: Vim-related stuff
+* Packages
++ [[https://github.com/w0rp/ale][Ale (async linter)]]
+* Keybindings
+Chrome extensions for vi keybandings:
++ cVim
++ Vimium
+
++ [[https://medium.com/@gregsramblings/gmail-keyboard-shortcuts-using-3c845bb77043][Using Gmail like Vi]]
+* Neovim
++ [[https://thoughtbot.com/upcase/dive-into-neovim][Dive into NeoVim]]

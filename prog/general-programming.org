@@ -1,0 +1,11 @@
+#+TITLE: General Programming Concepts
+* Articles
++ [[https://medium.freecodecamp.org/how-recursion-works-explained-with-flowcharts-and-a-video-de61f40cb7f9][How recursion works - with flowcharts]]
++ [[https://medium.freecodecamp.org/10-common-data-structures-explained-with-videos-exercises-aaff6c06fb2b][10 Common data structures explained]] 
++ [[https://www.joelonsoftware.com/2003/10/08/the-absolute-minimum-every-software-developer-absolutely-positively-must-know-about-unicode-and-character-sets-no-excuses/][Minimum every software developer absolutely, positively must know about Unicode and Character Sets]]
+
+* Tools
++ [[https://matthias-endler.de/2017/makefiles/][Afraid of Makefiles? Don't be!]]
+
+* Books
++ [[http://aroma.vn/web/wp-content/uploads/2016/11/code-complete-2nd-edition-v413hav.pdf][Code complete 2: A practical handbook of software construction]]

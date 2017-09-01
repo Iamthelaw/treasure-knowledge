@@ -1,0 +1,12 @@
+* Books
+- [[http://www.diveintopython3.net/refactoring.html][Dive into Python3: Chapter 10]]
+
+* Articles
+- [[http://blog.thedigitalcatonline.com/blog/2017/07/21/refactoring-with-test-in-python-a-practical-example/#.WYr8S3WGPIr][Refactoring with tests in Python: a practical example]]
+
+* Video
+- [[https://www.youtube.com/watch?v=D_6ybDcU5gc&feature=youtu.be][PyCon 2016 Brett Slatkin - Refactoring Python]]
+
+* Tools
+- [[https://github.com/mutpy/mutpy][Mutation testing tool]]
+

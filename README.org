@@ -1,0 +1,23 @@
+#+TITLE: Treasure collection of links and scrapes
+
+Mostly it is just another collection of programming-related stuff
+that I collect over years.
+
+In a big picture it consist of Python and Django related stuff, such as
+code examples, articles, videos and so on.
+
+Recently I installed emacs, and you know - org-mode is steal my heart.
+
+* TOC
++ Python
+  + [[./prog/python/general.org][General]]
+  + [[./prog/python/django.org][Django]]
++ General programming
+  + [[./prog/software-design.org][Sofrware Design]]
+  + [[./prog/general-programming.org][General Knolage]]
++ Databases
+  + [[./prog/db/postgres.org][Postgres]]
+  + [[./prog/db/mongo.org][MongoDB]]
++ Editors
+  + [[./editors/vim.org][Vim]]
+  + [[./editors/emacs.org][Spacemacs]]
