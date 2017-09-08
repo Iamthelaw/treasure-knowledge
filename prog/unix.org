@@ -1,0 +1,9 @@
+#+TITLE: Unix snippets that I like
+* Tools
++ *autosub* generates subtitles from video source
++ *youtube-dl* can download video from most of resources
+* Snippets
+** find some files and do something awesome!
+#+BEGIN_SRC sh
+find . -name '*.mp4' -exec autosub {} \;
+#+END_SRC

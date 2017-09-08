@@ -7,7 +7,16 @@
 + [[https://medium.com/wemake-services/managing-djangos-settings-e2b7f496120d][Managing Django settings (I like the structure thought)]]
 + [[http://lucasroesler.com/2017/04/delete-or-not-to-delete/][Delete or not delete]]
 + [[http://dizballanze.com/django-project-optimization-part-2/][Django optimization guide]]
++ [[http://blog.thedigitalcatonline.com/blog/2016/11/14/clean-architectures-in-python-a-step-by-step-example/#.WbKiDBdLfIr][Clean architecture in python]]
++ [[https://coderwall.com/p/ktdb3g/django-signals-an-extremely-simplified-explanation-for-beginners][Signals, extremely simplified explanation]]
++ [[https://www.dabapps.com/blog/higher-level-query-api-django-orm/][Building higher-level API with Django ORM]]
++ [[https://timmyomahony.com/blog/misconceptions-select_related-in-django/][Misconceptions with select_related]]
+** Concurrency
++ [[https://dzone.com/articles/django-concurrency-database][Django concurrency, database locking]]
 + [[https://medium.com/@hakibenita/how-to-manage-concurrency-in-django-models-b240fed4ee2][How to manage concurrency in Django models]]
+* Blogs
++ [[http://blog.thedigitalcatonline.com/][Digital Cat]]
++ [[http://pydanny-event-notes.readthedocs.io/en/latest][PyDanny Django events notes very helpful!]]
 * Debugging
 ** Quickly add queries logging in Django
 #+BEGIN_SRC python
@@ -40,3 +49,76 @@
 + [[https://engineering.rover.com/blog/ops/2017/08/21/wrangling-celery-workflows/][Wrangling celery workflows]]
 * Deploy
 + [[https://semaphoreci.com/community/tutorials/writing-testing-and-deploying-a-django-api-to-heroku-with-semaphore][Writing, testing, deploing Django APIs to Heroku from Semaphore]]
+* Django ORM
+** Optimizing database queries (just to not forgot)
+*** update fields
+With this block only this field will be updated
+#+BEGIN_SRC python
+from .models import Article
+
+article = Article.get(pk=1)
+article.url = 'https://google.com'
+article.save(update_fields=['url'])
+#+END_SRC
+*** only and defer
+Speedup things with stuff that you want to get, not everything from database
+#+BEGIN_SRC python
+from .models import Article
+
+article = Article.objects.only('url').get(pk=1)
+article = Article.objects.defer('title').get(pk=1)
+#+END_SRC
+*** bulk create
+#+BEGIN_SRC python
+from .models import Article
+
+Article.objects.bulk_create([
+    Article(url='https://google.com'),
+    Article(url='https://yandex.ru'),
+])
+#+END_SRC
+*** mass update
+#+BEGIN_SRC python
+from .models import Article
+
+
+ids_for_update = [1, 2, 3]
+
+Article.objects.filter(ids__in=ids_for_update).update(failed=True)
+#+END_SRC
+*** indixes
+Always check for indixes with EXPLAIN
+#+BEGIN_SRC python
+from django.db import models
+
+
+external_id = models.IntegerField(db_index=True)
+#+END_SRC
+*** transactions
+#+BEGIN_SRC python
+from django.db import transaction
+
+
+@transaction.atomic
+def do_stuff():
+    pass
+
+
+with transaction.atomic():
+    pass
+#+END_SRC
+*** select_related and prefetch_related
+If you know you need a related model in the future - do this, you dummie
+*** cached_property
+cache some properties in database
+#+BEGIN_SRC python
+from django.utils.functional import cached_property
+
+
+@cached_property
+def fullname(self):
+    return self.first_name + " " + self.last_name
+#+END_SRC
+* Profiling
+** Articles
++ [[https://blog.mirumee.com/django-fast-part-3-a02da6f12418][Django-fast-3]]

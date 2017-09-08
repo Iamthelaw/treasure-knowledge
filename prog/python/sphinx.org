@@ -1,0 +1,62 @@
+#+TITLE: For sphinx documentation snippets
+* List of all language pygments
+| Lexer                   |
+|-------------------------|
+| sql                     |
+| postgresql              |
+| plpgsql                 |
+| psql                    |
+| rst                     |
+| latex                   |
+| bat                     |
+| powershell              |
+| bash                    |
+| console                 |
+| css                     |
+| html                    |
+| xml                     |
+| xslt                    |
+| xquery                  |
+| javascript              |
+| json                    |
+| php                     |
+| html+php                |
+| python                  |
+| pytb (python traceback) |
+| pycon (python console)  |
+| java                    |
+| jproperties             |
+| apacheconf              |
+| r                       |
+| rout (r console)        |
+| matlab                  |
+| matlabsession           |
+| numpy                   |
+* Document formatting
+** Set highlight language for all code-snippets
+#+BEGIN_SRC rst
+.. hightlight:: bash
+
+::
+   pip install awesomness
+
+Example:
+
+::
+   find . -name '*.pyc'
+
+Stop.
+#+END_SRC
+* Snippets
+** Console code
+#+BEGIN_SRC rst
+.. code-block:: console
+   $ django-admin runserver
+#+END_SRC
+** Code-block with linenumbers
+#+BEGIN_SRC rst
+.. code-block:: sql
+   SELECT * from table WHILE (
+      id=1
+   )
+#+END_SRC

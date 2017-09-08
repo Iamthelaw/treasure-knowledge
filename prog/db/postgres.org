@@ -1,0 +1,139 @@
+#+TITLE Postgres related stuff
+* Tools
++ pgcli
+* Articles
++ [[http://www.revsys.com/writings/postgresql-performance.html][Postgresql performance]]
++ [[https://blog.heapanalytics.com/speeding-up-postgresql-queries-with-partial-indexes/][Speedup postgres with partial indixes]]
+* Analizing
+** EXPLAIN
+#+BEGIN_SRC sql
+EXPLAIN SELECT * FROM table;
+#+END_SRC
+returns *QUERY PLAN*
+#+BEGIN_SRC sql
+QUERY PLAN
+
+----------
+
+Sort (cost= rows= width=) (actual time= rows= loops=)
+  Sort Key: books.title
+    Nested Loop ()
+      Index Scan using authors_pkey on authors (cost= rows= width=) (actual time= rows= loops=)
+        Index Cond (id = 16)
+      Seq Scan on books (cost= rows= width=) (actual time= rows= loops=)
+        Filter (author_id = 16)
+
+Total runtime: 16.386 ms
+#+END_SRC
+Create index
+#+BEGIN_SRC sql
+CREATE INDEX books_idx1 on books(author);
+#+END_SRC
+Force database to use index, buy running (re)Analyze
+#+BEGIN_SRC sql
+ANALYZE books;
+#+END_SRC
+** ANALYZE
+* Locks
+Show blocking Postgres processes and kill them
+
+#+BEGIN_SRC sql
+CREATE VIEW blocking_procs AS
+SELECT 
+    kl.pid as blocking_pid,
+    ka.usename as blocking_user,
+    ka.current_query as blocking_query,
+    bl.pid as blocked_pid,
+    a.usename as blocked_user, 
+    a.current_query as blocked_query, 
+    to_char(age(now(), a.query_start),'HH24h:MIm:SSs') as age
+FROM pg_catalog.pg_locks bl
+    JOIN pg_catalog.pg_stat_activity a 
+        ON bl.pid = a.procpid
+    JOIN pg_catalog.pg_locks kl 
+        ON bl.locktype = kl.locktype
+        and bl.database is not distinct from kl.database
+        and bl.relation is not distinct from kl.relation
+        and bl.page is not distinct from kl.page
+        and bl.tuple is not distinct from kl.tuple
+        and bl.virtualxid is not distinct from kl.virtualxid
+        and bl.transactionid is not distinct from kl.transactionid
+        and bl.classid is not distinct from kl.classid
+        and bl.objid is not distinct from kl.objid
+        and bl.objsubid is not distinct from kl.objsubid
+        and bl.pid <> kl.pid 
+    JOIN pg_catalog.pg_stat_activity ka 
+        ON kl.pid = ka.procpid
+WHERE kl.granted and not bl.granted
+ORDER BY a.query_start;
+#+END_SRC
+
+How to test the query on a testing server (not your production DB server)
+
+Connect to your database open a transaction and manually lock a table:
+
+#+BEGIN_SRC sql
+BEGIN;
+LOCK your_table;
+#+END_SRC
+
+Leave the transaction and connection open.
+
+Open another client that accesses that data:
+
+#+BEGIN_SRC sql
+SELECT count(*) from your_table;
+#+END_SRC
+
+It now should be blocked.
+
+View the currently held locks with a third client:
+
+#+BEGIN_SRC sql
+SELECT * FROM blocking_procs;
+#+END_SRC
+
+#+BEGIN_SRC example
+blocking_pid   | 25842
+blocking_user  | postgres
+blocking_query | in transaction
+blocked_pid    | 25844
+blocked_user   | postgres
+blocked_query  | SELECT COUNT(*) FROM "your_table"
+age            | 00h:00m:23s
+#+END_SRC
+
+It's now possible to kill the offending process holding the lock using:
+
+#+BEGIN_SRC sql
+SELECT pg_terminate_backend(25842);
+#+END_SRC
+
+This will kill the connection where you've set the lock and the open transaction is rolled back but it seems to leave everything else intact. The second client should now get the response from the server.
+
+[[http://ghostwritten-insomnia.blogspot.ru/2013/04/show-blocking-postgres-processes-and.html][src]]
+* postgres.conf
+** Location
++ /etc/postgresql/9.6/main
++ /etc/lib/pgsql/pg_data
+** Some defaults
+#+BEGIN_SRC conf
+# enable logging
+logging_collector = on
+log_directory = pg_log
+# log queries that take more then 1s
+log_min_duration_statement = 1000
+#+END_SRC
+* Indexing
+** Create index
+*** Simple index
+#+BEGIN_SRC sql
+CREATE INDEX books_idx1 on books(author);
+#+END_SRC
+*** Partial index
+#+BEGIN_SRC sql
+CREATE INDEX emplyee_idx2 on employee(active) WHERE active='t';
+#+END_SRC
+** Find indexes
++ Use EXPLAIN for SquentalScans
++ Use =pg_stat_user_tables= also shows sequental scans

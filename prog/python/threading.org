@@ -1,0 +1,282 @@
+#+TITLE: Threading in Python
+
+General concepts:
++ threads shares process
++ threads needs locks when accessing shared items
+* Creating threads
+** Simple creation
+The simples example for creating thread is this:
+#+BEGIN_SRC python
+import threading
+
+
+def my_func(): return 1
+
+thread_1 = Thread(target=my_func)
+
+# Name of this thread will be generic Thread=1
+# To create a human-readable name for thread
+thread_2 = Thread(name='my_func', target=my_func)
+
+# Passing arguments is also easy
+thread_3 = Thread(target=my_func, args=(, ), kwargs={})
+#+END_SRC
+** Subclassing Thread
+Simple custom thread
+#+BEGIN_SRC python
+import threading
+
+
+class CustomThread(threading.Thread):
+    def run(self):
+        # my custom code
+        return
+#+END_SRC
+To pass arguments to CustomThread
+#+BEGIN_SRC python
+import threading
+
+
+class CustomThread(threading.THread):
+
+    def __init__(
+        self,
+        group=None,
+        target=None,
+        name=None,
+        args=(),
+        kwargs=None,
+        verbose=None):
+
+        threading.Thread.__init__(
+            self,
+            group=group,
+            target=target,
+            name=name,
+            verbose=verbose
+        )
+        self.args = args
+        self.kwargs = kwargs
+        return
+
+    def run(self):
+        return self.args
+#+END_SRC
+* Starting and waiting for result
+1. To start a thread - call =.start()=
+2. To wait for thread finishes  - call =.join()=
+* Signals between threads (Events)
+Threads communicate between themself using events
+
+event is just a regular class that have special flag and have
+ some vital methods to work with it
++ *isSet()* non blocking check if flag is =set=
++ *wait(thread)* other threads can =wait= for flag to be =set=
++ *clear()* unset flag
++ *set()* caller can =set= or =clear= flag
+#+BEGIN_SRC python
+import threading
+
+
+def wait_for_event(event):
+    """Wait for the event to be set before doing anything"""
+    event_is_set = event.wait()
+
+
+def wait_for_event_timeout(event, thread):
+    """Wait t seconds and then timeout"""
+    while not event.isSet():
+        event_is_set = event.wait(thread)
+
+
+event = threading.Event()
+
+thread_1 = threading.Thread(
+    name='block',
+    target=wait_for_event,
+    args=(event, )
+)
+thread_1.start()
+
+thread_2 = threading.Thread(
+    name='non-block',
+    target=wait_for_event_timeout,
+    args=(event, 2)
+)
+thread_2.start()
+
+event.set()
+#+END_SRC
+
+* Syncronyzing threads (Condition: consumers and producers)
+*Condition* uses =Lock= and can be tied to shared resource. Generaly speaking
+it causes thread to wait for resource to be updated.
+#+BEGIN_SRC python
+import threading
+
+
+def consumer(condition):
+    """wait for the condition and use the resource"""
+    t = threading.currentThread()
+    with condition:
+        condition.wait()
+
+
+def producer(condition):
+    """set up the resource to be used by the consumer"""
+    with condition:
+        condition.notifyAll()
+
+
+condition = threading.Condition()
+consumer_1 = threading.Thread(name='c1', target=consumer, args=(condition, ))
+consumer_2 = threading.Thread(name='c2', target=consumer, args=(condition, ))
+producer = threading.Thread(name='p', target=producer, args=(condition, ))
+
+consumer_1.start()
+consumer_2.start()
+producer.start()
+#+END_SRC
+* Limiting access to rsources (Semaphore)
+#+BEGIN_SRC python
+import threading
+
+
+class ActivePool(object):
+    def __init__(self):
+        super(ActivePool, self).__init__()
+        self.active = []
+        self.lock = threading.Lock()
+
+    def makeActive(self, name):
+        with self.lock:
+            self.active.append(name)
+
+    def makeInactive(self, name):
+        with self.lock:
+            self.active.remove(name)
+
+def worker(semaphore, pool):
+    with semaphore:
+        name = threading.currentThread().getName()
+        pool.makeActive(name)
+        pool.makeInactive(name)
+
+pool = ActivePool()
+semaphore = threading.Semaphore(2)
+for i in range(4):
+    t = threading.Thread(target=worker, name=str(i), args=(semaphore, pool))
+    t.start()
+#+END_SRC
+* With multiprocess module
+Multiprocessing /dummy/ module spawns threads instead of processes
+#+BEGIN_SRC python
+from multiprocessing.dummy import Pool as ThreadPool
+
+def squareNumber(n):
+    return n ** 2
+
+# function to be mapped over
+def calculateParallel(numbers, threads=2):
+    pool = ThreadPool(threads)
+    results = pool.map(squareNumber, numbers)
+    # That's right - first close, then join
+    pool.close()
+    pool.join()
+    return results
+
+if __name__ == "__main__":
+    numbers = [1, 2, 3, 4, 5]
+    squaredNumbers = calculateParallel(numbers, 4)
+    for n in squaredNumbers:
+        print(n)
+#+END_SRC
+* Logging
+Of course you can =print threading.currentThread().get_name()=, but 
+logging module have special name for thread name and it is called =%(threadName)s=
+#+BEGIN_SRC python
+import logging
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format='[%(levelname)s] (%(threadName)-10s) %(message)s',
+)
+#+END_SRC
+* Locks
+Two type of locks:
++ Lock
++ RLock
+
+*Lock* is a simple type of locks. to use it:
+#+BEGIN_SRC python
+import threading
+
+
+lock = threading.Lock()
+
+my_func():
+    lock.acquire()
+    # some code that needs to be accessed only one thread at a time
+    lock.release()
+#+END_SRC
+More pythonic way to do it would be with context manager
+#+BEGIN_SRC python
+import threading
+
+
+lock = threading.Lock()
+
+def my_func():
+    with lock:
+        # some protected from concurrent access code
+#+END_SRC
+
+#+BEGIN_QUOTE
+*IMPORTANT* normal *Lock* can not be acquired more than ome time even with the same thread.
+For thus you use Re-entrant Locks
+#+END_QUOTE
+
+Example of re-entrant locks
+#+BEGIN_SRC python
+import threading
+
+
+lock = threading.RLock()
+#+END_SRC
+* Thread specific data
+=threading.local()= function creates an object capable of hiding values from view
+in separate threads. Other threads can't see this value
+#+BEGIN_SRC python
+import threading
+
+
+def show_value(data):
+    try:
+        val = data.value
+
+
+def worker(data):
+    show_value(data)
+    data.value = random.randint(1, 100)
+    show_value(data)
+
+local_data = threading.local()
+show_value(local_data)
+local_data.value = 1000
+show_value(local_data)
+
+for i in range(2):
+    t = threading.Thread(target=worker, args=(local_data, ))
+    t.start()
+#+END_SRC
+* Misc
+To list all active threads
+#+BEGIN_SRC python
+import threading
+
+threading.enumearte()
+#+END_SRC
+* See also
++ thread: low level thread api
++ [[https://pymotw.com/2/Queue/index.html#module-Queue][Queue: thread-safe Queue, usefull for passing messages between threads]]
++ [[https://pymotw.com/2/multiprocessing/index.html#module-multiprocessing][multiprocessing: an API for working with processes that mirrors the threading API]]

@@ -1,0 +1,19 @@
+#+TITLE: Concurrency in Python
+* Multiprocessing
+* Concurrency
+This is builtin goodie, starts your processes in parallel, for how many cpu you have
+
+Simple examples
+#+BEGIN_SRC python
+import concurrent.futures
+
+
+def my_func(index):
+    print index, 'my funk!'
+
+
+with concurrent.futures.ProcessPoolExecutor() as executor:
+    for item in xrange(1000):
+        executor.map(my_func, item)
+#+END_SRC
+* Asyncio
