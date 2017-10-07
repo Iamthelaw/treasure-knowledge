@@ -1,20 +1,31 @@
 #+TITLE: Python General Knowlage
+
 + [[./threading.org][Threading]]
 + [[./concurrency.org][Concurrency]]
+
 * Python 2/3
+
 + [[http://python-future.org/compatible_idioms.html][Writing python 2-3 compatible code]]
++ [[https://medium.com/@ageitgey/learn-how-to-use-static-type-checking-in-python-3-6-in-10-minutes-12c86d72677b][How to use python 3 static type checking]]
+
 * Tools
+
 - [[https://github.com/joerick/pyinstrument][pyinstrument]]
+
 * Cool Projects
+
 + [[https://github.com/coells/100days?utm_campaign=explore-email&utm_medium=email&utm_source=newsletter&utm_term=weekly][100 Days of Algorithms in python]]
 + [[https://github.com/crazyguitar/pysheeet?utm_campaign=explore-email&utm_medium=email&utm_source=newsletter&utm_term=weekly][Python cheatsheet project]]
+
 * Code analyzing
+
 ** pyreverse
 :pyreverse: to create class chema. =pyreverse web_edu.core.declaration.alloc=
 :xdot: to view .dot schematics =xdot classes.dot=
-* Logging
-** Basic primer
 
+* Logging
+
+** Basic primer
 #+BEGIN_SRC python
 import sys
 import logging
@@ -23,7 +34,6 @@ logging.basicConfig(stream=sys.stdout, level=logging.DEBUG)
 #+END_SRC
 
 ** Raise a package level logging
-
 #+BEGIN_SRC python
 logging.getLogger('urllib3').setLevel(logging.INFO)
 #+END_SRC
