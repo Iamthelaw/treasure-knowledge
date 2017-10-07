@@ -177,3 +177,6 @@ chunks = izip_longest(*[iter(items)] * 3)
 * Videos
 + [[https://www.youtube.com/watch?v=NfngrdLv9ZQ][Raymond Hettinger - about decorators]]
 + [[https://www.youtube.com/watch?v=wf-BqAjZb8M][Raymond Hettinger - Beyond PEP8]]
+
+* Code optimization
++ [[https://www.schneems.com/2017/10/02/lifelong-rubyist-makes-some-python-code-5x-faster/][Lifelong rubyist makes some python code 5x faster]]
