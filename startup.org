@@ -5,3 +5,6 @@
 + [[https://lincolnloop.com/blog/multiple-sites-routing-uwsgi/][How to host multiple sites on one Heroku instance]]
 + [[https://www.phusionpassenger.com/][Phusion passanger]]
 + [[https://www.pexels.com][Best free for use stock images search]]
++ [[http://graphemica.com/][Unicode character fullblown search]]
++ [[http://zeptojs.com/][Zepto: light jquery alternative]]
++ [[https://www.flaticon.com/][Free vector icons search]]
