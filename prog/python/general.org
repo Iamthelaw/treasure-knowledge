@@ -183,3 +183,6 @@ chunks = izip_longest(*[iter(items)] * 3)
 
 * Decorators
 + [[https://hynek.me/articles/decorators/][The dirty secrets of bad decorators]]
+
+* Looping
++ [[http://treyhunner.com/loop-better/][Slides about looping better]]
