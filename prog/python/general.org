@@ -187,3 +187,6 @@ chunks = izip_longest(*[iter(items)] * 3)
 
 * Looping
 + [[http://treyhunner.com/loop-better/][Slides about looping better]]
+
+* Packaging
++ [[http://veekaybee.github.io/2017/09/26/python-packaging/][Python packaging explained]]
