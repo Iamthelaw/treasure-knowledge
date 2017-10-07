@@ -180,3 +180,6 @@ chunks = izip_longest(*[iter(items)] * 3)
 
 * Code optimization
 + [[https://www.schneems.com/2017/10/02/lifelong-rubyist-makes-some-python-code-5x-faster/][Lifelong rubyist makes some python code 5x faster]]
+
+* Decorators
++ [[https://hynek.me/articles/decorators/][The dirty secrets of bad decorators]]
