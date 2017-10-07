@@ -183,6 +183,7 @@ chunks = izip_longest(*[iter(items)] * 3)
 
 * Decorators
 + [[https://hynek.me/articles/decorators/][The dirty secrets of bad decorators]]
++ [[https://hackernoon.com/the-magic-behind-python-generator-functions-bc8eeea54220][Magic behind python generator functions]]
 
 * Looping
 + [[http://treyhunner.com/loop-better/][Slides about looping better]]
