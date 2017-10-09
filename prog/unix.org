@@ -2,6 +2,8 @@
 * Tools
 + *autosub* generates subtitles from video source
 + *youtube-dl* can download video from most of resources
++ [[https://github.com/pimutils/khal][*KHAL* cli calendar application]]
++ *polybar* to make titlebar meaningful again!
 * Snippets
 ** find some files and do something awesome!
 #+BEGIN_SRC sh
